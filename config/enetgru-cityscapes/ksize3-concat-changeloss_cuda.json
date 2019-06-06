@@ -1,0 +1,161 @@
+{
+    "name": "enetgru-cityscapes-imgseq-ksize3-concat-changeloss",
+    
+    "arch": {
+        "type": "ENetGRU",
+        "kwargs": {
+            "init_rnn": false,
+            "residual_connection": true,
+            "summate_res_connection": false,
+            "rnn_ksize": 3
+        }
+    },
+    "dataset": {
+        "type": "CityscapesImgSequence",
+        "kwargs": {
+            "short": true
+        }
+    },
+
+    "data_loader": {
+        "train": {
+            "kwargs": {
+                "batch_size": 7,
+                "shuffle": true,
+                "use_workers": true
+            }
+        },
+        "val": {
+            "kwargs": {
+                "batch_size": 7,
+                "shuffle": false,
+                "use_workers": true
+            }
+        },
+        "test": {
+            "kwargs": {
+                "batch_size": 7,
+                "shuffle": false,
+                "use_workers": true
+            }
+        },
+        "visualize": {
+            "kwargs": {
+                "batch_size": 1,
+                "shuffle": false,
+                "use_workers": true
+            }
+        }
+    },
+    "conceptual_loss": {
+        "type": "CrossEntropyLoss",
+        "kwargs": {
+            "weight": 0.8
+        },
+        "weighing": {
+            "type": "enet_weighing",
+            "kwargs": {
+                "ignore_labels": ["unlabeled"],
+                "c": 1.02
+            }
+        }
+    },
+    "consistency_loss": {
+        "type": "ChangeLoss",
+        "kwargs": {
+            "weight": 0.2
+        }
+    },
+    "metrics": [
+        {
+            "type": "IoU",
+            "kwargs": {
+                "ignore_labels": ["unlabeled"]
+            }
+        }
+    ],
+    "optimizer": {
+        "type": "Adam",
+        "kwargs": {
+            "lr": 0.001,
+            "weight_decay": 0.0002,
+            "amsgrad": true
+        }
+    },
+    "lr_scheduler": {
+        "type": "StepLR",
+        "kwargs": {
+            "step_size": 50,
+            "gamma": 0.31
+        }
+    },
+    "trainer": {
+        "kwargs": {
+            "epochs": 200,
+            "save_dir": "saved/",
+            "validation_freq": 1,
+            "max_bptt_depth": 1
+        }
+    },
+    "evaluator": {
+        "name": "enetgru-cityscapes-imgseq-ksize3-concat-changeloss",
+        "dataset": {
+            "type": "CityscapesImgSequence",
+            "kwargs": {
+                "short": true
+            }
+        },
+        "archs": [
+        ],
+        "data_loader": {
+            "train": {
+                "kwargs": {
+                    "batch_size": 1,
+                    "shuffle": false,
+                    "use_workers": true
+                }
+            },
+            "val": {
+                "kwargs": {
+                    "batch_size": 1,
+                    "shuffle": false,
+                    "use_workers": true
+                }
+            },
+            "test": {
+                "kwargs": {
+                    "batch_size": 1,
+                    "shuffle": false,
+                    "use_workers": true
+                }
+            },
+            "visualize": {
+                "kwargs": {
+                    "batch_size": 1,
+                    "shuffle": true,
+                    "use_workers": true
+                }
+            }
+        },
+        "metrics": [
+            {
+                "type": "IoU",
+                "kwargs": {
+                    "ignore_labels": ["unlabeled"]
+                }
+            },
+            {
+                "type": "TemporalIoU",
+                "kwargs": {
+                }
+            },
+            {
+                "type": "TemporalIoU",
+                "kwargs": {
+                    "ignore_labels": ["unlabeled"],
+                    "name": "TemporalIoU-ignore-unlabeled"
+                }
+            }
+        ]
+    }
+}

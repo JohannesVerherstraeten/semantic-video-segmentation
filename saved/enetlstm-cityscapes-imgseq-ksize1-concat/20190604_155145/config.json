@@ -1,0 +1,161 @@
+{
+    "name": "enetlstm-cityscapes-imgseq-ksize1-concat",
+    "arch": {
+        "type": "ENetLSTM",
+        "kwargs": {
+            "init_rnn": false,
+            "residual_connection": true,
+            "summate_res_connection": false,
+            "rnn_ksize": 1
+        }
+    },
+    "dataset": {
+        "type": "CityscapesImgSequence",
+        "kwargs": {
+            "short": true
+        }
+    },
+    "data_loader": {
+        "train": {
+            "kwargs": {
+                "batch_size": 7,
+                "shuffle": true,
+                "use_workers": true
+            }
+        },
+        "val": {
+            "kwargs": {
+                "batch_size": 7,
+                "shuffle": false,
+                "use_workers": true
+            }
+        },
+        "test": {
+            "kwargs": {
+                "batch_size": 7,
+                "shuffle": false,
+                "use_workers": true
+            }
+        },
+        "visualize": {
+            "kwargs": {
+                "batch_size": 1,
+                "shuffle": false,
+                "use_workers": true
+            }
+        }
+    },
+    "conceptual_loss": {
+        "type": "CrossEntropyLoss",
+        "kwargs": {
+            "weight": 1.0
+        },
+        "weighing": {
+            "type": "enet_weighing",
+            "kwargs": {
+                "ignore_labels": [
+                    "unlabeled"
+                ],
+                "c": 1.02
+            }
+        }
+    },
+    "metrics": [
+        {
+            "type": "IoU",
+            "kwargs": {
+                "ignore_labels": [
+                    "unlabeled"
+                ]
+            }
+        }
+    ],
+    "optimizer": {
+        "type": "Adam",
+        "kwargs": {
+            "lr": 0.001,
+            "weight_decay": 0.0002,
+            "amsgrad": true
+        }
+    },
+    "lr_scheduler": {
+        "type": "StepLR",
+        "kwargs": {
+            "step_size": 50,
+            "gamma": 0.31
+        }
+    },
+    "trainer": {
+        "kwargs": {
+            "epochs": 200,
+            "save_dir": "saved/",
+            "validation_freq": 1,
+            "max_bptt_depth": 1
+        }
+    },
+    "evaluator": {
+        "name": "enetlstm-cityscapes-imgseq-ksize1-concat/20190519_232518/selftrained-checkpoint-e137",
+        "dataset": {
+            "type": "CityscapesImgSequence",
+            "kwargs": {
+                "short": true
+            }
+        },
+        "archs": [
+            "saved/enetlstm-cityscapes-imgseq-ksize1-concat/20190519_232518/selftrained-checkpoint-e137.pth"
+        ],
+        "data_loader": {
+            "train": {
+                "kwargs": {
+                    "batch_size": 4,
+                    "shuffle": false,
+                    "use_workers": true
+                }
+            },
+            "val": {
+                "kwargs": {
+                    "batch_size": 4,
+                    "shuffle": false,
+                    "use_workers": true
+                }
+            },
+            "test": {
+                "kwargs": {
+                    "batch_size": 4,
+                    "shuffle": false,
+                    "use_workers": true
+                }
+            },
+            "visualize": {
+                "kwargs": {
+                    "batch_size": 4,
+                    "shuffle": true,
+                    "use_workers": true
+                }
+            }
+        },
+        "metrics": [
+            {
+                "type": "IoU",
+                "kwargs": {
+                    "ignore_labels": [
+                        "unlabeled"
+                    ]
+                }
+            },
+            {
+                "type": "TemporalIoU",
+                "kwargs": {}
+            },
+            {
+                "type": "TemporalIoU",
+                "kwargs": {
+                    "ignore_labels": [
+                        "unlabeled"
+                    ],
+                    "name": "TemporalIoU-ignore-unlabeled"
+                }
+            }
+        ]
+    }
+}

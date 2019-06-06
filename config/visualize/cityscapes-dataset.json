@@ -1,0 +1,41 @@
+{
+    "name": "visualize-cityscapes-dataset",
+    "dataset": {
+        "type": "CityscapesImgSequence",
+        "kwargs": {
+            "short": true
+        }
+    },
+    "archs": [
+    ],
+    "data_loader": {
+        "train": {
+            "kwargs": {
+                "batch_size": 2,
+                "shuffle": true,
+                "num_workers": true
+            }
+        },
+        "val": {
+            "kwargs": {
+                "batch_size": 2,
+                "shuffle": true,
+                "use_workers": true
+            }
+        },
+        "test": {
+            "kwargs": {
+                "batch_size": 2,
+                "shuffle": true,
+                "use_workers": true
+            }
+        },
+        "visualize": {
+            "kwargs": {
+                "batch_size": 2,
+                "shuffle": true,
+                "use_workers": true
+            }
+        }
+    }
+}

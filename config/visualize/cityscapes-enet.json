@@ -1,0 +1,42 @@
+{
+    "name": "visualize-cityscapes-imgseq-enet",
+    "dataset": {
+        "type": "CityscapesImgSequence",
+        "kwargs": {
+            "short": true
+        }
+    },
+    "archs": [
+	"saved/enet-cityscapes/20190317_010846/selftrained-checkpoint-e103.pth"
+    ],
+    "data_loader": {
+        "train": {
+            "kwargs": {
+                "batch_size": 1,
+                "shuffle": false,
+                "use_workers": true
+            }
+        },
+        "val": {
+            "kwargs": {
+                "batch_size": 1,
+                "shuffle": false,
+                "use_workers": true
+            }
+        },
+        "test": {
+            "kwargs": {
+                "batch_size": 1,
+                "shuffle": false,
+                "use_workers": true
+            }
+        },
+        "visualize": {
+            "kwargs": {
+                "batch_size": 1,
+                "shuffle": true,
+                "use_workers": true
+            }
+        }
+    }
+}

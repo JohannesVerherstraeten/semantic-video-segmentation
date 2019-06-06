@@ -1,0 +1,86 @@
+{
+    "name": "enet-cityscapes",
+    
+    "arch": {
+        "type": "ENet",
+        "kwargs": {}
+    },
+    "dataset": {
+        "type": "Cityscapes",
+        "kwargs": {}
+    },
+
+    "data_loader": {
+        "train": {
+            "kwargs": {
+                "batch_size": 4,
+                "shuffle": true,
+                "num_workers": 4
+            }
+        },
+        "val": {
+            "kwargs": {
+                "batch_size": 4,
+                "shuffle": true,
+                "num_workers": 4
+            }
+        },
+        "test": {
+            "kwargs": {
+                "batch_size": 4,
+                "shuffle": true,
+                "num_workers": 4
+            }
+        },
+        "visualize": {
+            "kwargs": {
+                "batch_size": 1,
+                "shuffle": false,
+                "num_workers": 0
+            }
+        }
+    },
+    "conceptual_loss": {
+        "type": "CrossEntropyLoss",
+        "kwargs": {
+            "weight": 1.0
+        },
+        "weighing": {
+            "type": "enet_weighing",
+            "kwargs": {
+                "ignore_labels": ["unlabeled"],
+                "c": 1.02
+            }
+        }
+    },
+    "metrics": [
+        {
+            "type": "IoU",
+            "kwargs": {
+                "ignore_labels": ["unlabeled"]
+            }
+        }
+    ],
+    "optimizer": {
+        "type": "Adam",
+        "kwargs": {
+            "lr": 0.0005,
+            "weight_decay": 0.0002,
+            "amsgrad": true
+        }
+    },
+    "lr_scheduler": {
+        "type": "StepLR",
+        "kwargs": {
+            "step_size": 100,
+            "gamma": 0.1
+        }
+    },
+    "trainer": {
+        "kwargs": {
+            "epochs": 170,
+            "save_dir": "saved/",
+            "validation_freq": 10
+        }
+    }
+}
