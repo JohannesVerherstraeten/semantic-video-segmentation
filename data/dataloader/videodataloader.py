@@ -30,7 +30,7 @@ class VideoDataLoader(BaseDataLoader):
     images, so the flag will be True for the first image of each sequence.
     """
 
-    def __init__(self, dataset: videodataset.VideoDataset, batch_size=1, shuffle=False, use_workers=True):
+    def __init__(self, dataset: videodataset.VideoDataset, batch_size=1, shuffle=False, num_workers=0):
         """
         :param dataset: dataset from which to load the data.
         :type dataset: VideoDataset
@@ -42,7 +42,7 @@ class VideoDataLoader(BaseDataLoader):
         """
         super(VideoDataLoader, self).__init__()
         self.dataset = dataset
-        self.use_workers = use_workers
+        self.use_workers = num_workers > 0
         self.batch_size = batch_size
         self.shuffle = shuffle
 
@@ -83,24 +83,23 @@ class VideoDataLoaderIter(object):
         self.use_workers = loader.use_workers
         self.current_videoiter = None
 
+    def __iter__(self):
+        return self
+
     def __next__(self):
         # Iterate over the videos in the dataset one by one.
         if self.current_videoiter is None:
             video_idxs = next(self.sampler_iteratator)          # may raise StopIteration
             videos = [self.dataset.get_videos()[i] for i in video_idxs]
             self.current_videoiter = BatchVideoIterator(*videos, use_workers=self.use_workers)
-            is_start_of_new_video = True
-        else:
-            is_start_of_new_video = False
-
         try:
             result = next(self.current_videoiter)
         except StopIteration:
             self.current_videoiter = None
             return next(self)       # try to open a new video iterator, if not available throw StopIteration
         else:
-            assert len(result) == 2     # (frames, labels)
-            return result[0], result[1], is_start_of_new_video
+            assert len(result) == 3    # (frames, labels, flag)
+            return result
 
     def __len__(self):
         raise NotImplementedError

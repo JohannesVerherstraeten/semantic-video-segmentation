@@ -21,7 +21,7 @@ import utils.utils as utils
 import model
 
 
-def main(config, visualize, use_cuda, save_visualization, log):
+def main(config, visualize, visualization_interval, use_cuda, save_visualization, log):
     logging.basicConfig(level=logging.INFO,
                         # filename="evaluate.log",
                         stream=sys.stdout,
@@ -37,7 +37,6 @@ def main(config, visualize, use_cuda, save_visualization, log):
     dataloader_train = dataset_train.create_dataloader(**config["data_loader"]["train"]["kwargs"])
     dataloader_val = dataset_val.create_dataloader(**config["data_loader"]["val"]["kwargs"])
     dataloader_test = dataset_test.create_dataloader(**config["data_loader"]["test"]["kwargs"])
-    dataloader_visualize = dataset_test.create_dataloader(**config["data_loader"]["visualize"]["kwargs"])
     nb_of_classes = dataset_train.get_nb_classes()
 
     # build model architecture
@@ -107,7 +106,7 @@ def main(config, visualize, use_cuda, save_visualization, log):
 
     evaluator = Evaluator(dataloader_val, model_instances, metrics, config,
                           visualize, show_labels=True, overlay=True, show_flow=False,
-                          save_dir=save_dir, log_files=log_files, cuda=use_cuda)
+                          save_dir=save_dir, log_files=log_files, cuda=use_cuda, interval=visualization_interval)
     evaluator.evaluate()
 
 
@@ -119,18 +118,30 @@ def load_model_from_checkpoint(checkpoint_path, cuda, model_instance=None):
     return model_instance
 
 
+def __restricted_float(x):
+    if x is None:
+        x = 0.0
+    else:
+        x = float(x)
+    if x < 0.0:
+        raise argparse.ArgumentTypeError("time parameter value {} must be non-negative".format(x))
+    return x
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Visualize one or multiple models')
+    parser.add_argument('config', type=str,
+                        help='config file path.')
     parser.add_argument('-v', '--visualize', action='store_true',
                         help='visualize the evaluation process.')
     parser.add_argument('-s', '--save', action='store_true',
                         help='save the visualization under saved/images/<config-name>/.')
+    parser.add_argument('-t', '--time', type=__restricted_float,
+                        help='time between consecutive visualizations (1 / framerate).')
     parser.add_argument('-l', '--log', action='store_true',
                         help='log the evaluation process to the same direction as the loaded checkpoint(s).')
     parser.add_argument('--cuda', action='store_true',
                         help="enable GPU acceleration.")
-    parser.add_argument('config', type=str,
-                        help='config file path.')
 
     args = parser.parse_args()
 
@@ -139,4 +150,4 @@ if __name__ == '__main__':
 
     config = json.load(open(args.config))
 
-    main(config, args.visualize, args.cuda, args.save, args.log)
+    main(config, args.visualize, args.time, args.cuda, args.save, args.log)

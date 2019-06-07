@@ -45,7 +45,6 @@ def main(config, checkpoint, use_cuda):
     dataloader_train = dataset_train.create_dataloader(**config["data_loader"]["train"]["kwargs"])
     dataloader_val = dataset_val.create_dataloader(**config["data_loader"]["val"]["kwargs"])
     dataloader_test = dataset_test.create_dataloader(**config["data_loader"]["test"]["kwargs"])
-    dataloader_visualize = dataset_test.create_dataloader(**config["data_loader"]["visualize"]["kwargs"])
     nb_of_classes = dataset_train.get_nb_classes()
 
     # build model architecture

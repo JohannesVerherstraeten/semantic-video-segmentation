@@ -23,7 +23,7 @@ class VideoBatchSampler(BaseVideoBatchSampler):
         super(VideoBatchSampler, self).__init__(dataset, batch_size, shuffle)
 
     def __iter__(self) -> Iterator[Tuple[int, ...]]:
-        return iter(self.batches)
+        return VideoBatchSamplerIter(self)
 
     def __len__(self) -> int:
         raise NotImplementedError

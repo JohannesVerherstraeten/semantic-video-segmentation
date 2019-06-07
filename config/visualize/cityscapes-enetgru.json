@@ -7,7 +7,7 @@
         }
     },
     "archs": [
-	    "saved/enet-cityscapes/20190317_010846/selftrained-checkpoint-e103.pth"
+        "saved/enetgru-cityscapes-imgseq-ksize3-concat-warpingloss2/20190531_182822/selftrained-checkpoint-e154.pth"
     ],
     "data_loader": {
         "train": {

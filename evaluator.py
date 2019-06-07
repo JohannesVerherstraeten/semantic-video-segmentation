@@ -20,7 +20,7 @@ import utils.opticalflow as opticalflow
 class Evaluator(object):
 
     def __init__(self, data_loader, models=[], metrics=[], config=None, visualize=True, show_labels=True,
-                 overlay=True, show_flow=False, save_dir=None, log_files=[], cuda=False):
+                 overlay=True, show_flow=False, save_dir=None, log_files=[], cuda=False, interval=0.02):
 
         self.logger = logging.getLogger(self.__class__.__name__)
 
@@ -35,7 +35,7 @@ class Evaluator(object):
         self.show_flow = show_flow
         self.save_dir = save_dir
         self.eval_loggers = [EvaluationLogger(log_file) for log_file in log_files]
-        self.interval = 0.02
+        self.interval = interval
 
         self.count = 0
 
@@ -155,9 +155,9 @@ class Evaluator(object):
                     previous_frames = frames
 
                     if self.show_labels or self.show_flow:
-                        plt.pause(0.03)
-                    else:
                         plt.pause(self.interval)
+                    else:
+                        plt.pause(0.015)
 
             self.count += 1
             del predictions

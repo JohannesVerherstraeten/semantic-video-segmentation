@@ -31,13 +31,6 @@
                 "shuffle": true,
                 "num_workers": 4
             }
-        },
-        "visualize": {
-            "kwargs": {
-                "batch_size": 1,
-                "shuffle": false,
-                "num_workers": 0
-            }
         }
     },
     "conceptual_loss": {

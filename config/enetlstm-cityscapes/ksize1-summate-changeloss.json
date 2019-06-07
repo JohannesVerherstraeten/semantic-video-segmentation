@@ -1,12 +1,12 @@
 {
-    "name": "enetlstm-cityscapes-imgseq-ksize1-concat-warpingloss2",
+    "name": "enetlstm-cityscapes-imgseq-ksize1-concat-changeloss",
     
     "arch": {
         "type": "ENetLSTM",
         "kwargs": {
             "init_rnn": false,
             "residual_connection": true,
-            "summate_res_connection": false,
+            "summate_res_connection": true,
             "rnn_ksize": 1
         }
     },
@@ -22,35 +22,28 @@
             "kwargs": {
                 "batch_size": 2,
                 "shuffle": true,
-                "use_workers": true
+                "num_workers": 2
             }
         },
         "val": {
             "kwargs": {
                 "batch_size": 2,
                 "shuffle": false,
-                "use_workers": true
+                "num_workers": 2
             }
         },
         "test": {
             "kwargs": {
                 "batch_size": 2,
                 "shuffle": false,
-                "use_workers": true
-            }
-        },
-        "visualize": {
-            "kwargs": {
-                "batch_size": 2,
-                "shuffle": false,
-                "use_workers": true
+                "num_workers": 2
             }
         }
     },
     "conceptual_loss": {
         "type": "CrossEntropyLoss",
         "kwargs": {
-            "weight": 0.99
+            "weight": 0.8
         },
         "weighing": {
             "type": "enet_weighing",
@@ -61,9 +54,9 @@
         }
     },
     "consistency_loss": {
-        "type": "WarpingLoss2",
+        "type": "ChangeLoss",
         "kwargs": {
-            "weight": 0.01
+            "weight": 0.2
         }
     },
     "metrics": [

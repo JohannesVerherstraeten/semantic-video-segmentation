@@ -22,28 +22,21 @@
             "kwargs": {
                 "batch_size": 7,
                 "shuffle": true,
-                "use_workers": true
+                "num_workers": 4
             }
         },
         "val": {
             "kwargs": {
                 "batch_size": 7,
                 "shuffle": false,
-                "use_workers": true
+                "num_workers": 4
             }
         },
         "test": {
             "kwargs": {
                 "batch_size": 7,
                 "shuffle": false,
-                "use_workers": true
-            }
-        },
-        "visualize": {
-            "kwargs": {
-                "batch_size": 1,
-                "shuffle": false,
-                "use_workers": true
+                "num_workers": 4
             }
         }
     },
@@ -100,34 +93,28 @@
             }
         },
         "archs": [
+            "saved/enetgru-cityscapes-imgseq-ksize3-concat/20190529_222334/selftrained-checkpoint-e145.pth"
         ],
         "data_loader": {
             "train": {
                 "kwargs": {
-                    "batch_size": 1,
+                    "batch_size": 4,
                     "shuffle": false,
-                    "use_workers": true
+                    "num_workers": 4
                 }
             },
             "val": {
                 "kwargs": {
-                    "batch_size": 1,
+                    "batch_size": 4,
                     "shuffle": false,
-                    "use_workers": true
+                    "num_workers": 4
                 }
             },
             "test": {
                 "kwargs": {
-                    "batch_size": 1,
+                    "batch_size": 4,
                     "shuffle": false,
-                    "use_workers": true
-                }
-            },
-            "visualize": {
-                "kwargs": {
-                    "batch_size": 1,
-                    "shuffle": true,
-                    "use_workers": true
+                    "num_workers": 4
                 }
             }
         },

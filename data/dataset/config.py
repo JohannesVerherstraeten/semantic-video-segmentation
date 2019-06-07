@@ -1,9 +1,11 @@
 """
-This file configures ENet and the datasets. This allows running the code on multiple
+This file configures the datasets. This allows running the code on multiple
 computers, independent from the directory structure.
 
-To avoid pushing your personal config file, do:
-git update-index --assume-unchanged ENet-modified/.config.py
+Update the base directories to match the setup of your project.
+
+To avoid pushing your personal config file to git repo, do:
+git update-index --assume-unchanged config.py
 
 """
 
@@ -15,15 +17,10 @@ git update-index --assume-unchanged ENet-modified/.config.py
 # Base directories
 # ----------------
 
-# Johannes personal pc
+
 PROJECT_DIR = "/media/johannes/Data/documenten-van-johannes/Documenten/School/KU Leuven/Master 2/Thesis/temporal/"
 CAMVID_DIR = "/media/johannes/Seagate Backup Plus Drive/Datasets/CamVid/"
 CITYSCAPES_DIR = "/media/johannes/Seagate Backup Plus Drive/Datasets/Cityscapes/"
-
-# ESAT pc
-# PROJECT_DIR = "/users/start2016/r0582208/Documents/temporal/ENet-modified/"
-# CAMVID_DIR = "/esat/asahi/r0582208/CamVid/"
-# CITYSCAPES_DIR = "/esat/asahi/r0582208/Cityscapes/"
 
 
 # ----------------

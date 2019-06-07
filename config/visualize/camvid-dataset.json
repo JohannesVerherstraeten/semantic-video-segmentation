@@ -1,9 +1,8 @@
 {
-    "name": "visualize-cityscapes-dataset",
+    "name": "visualize-camvid-dataset",
     "dataset": {
-        "type": "CityscapesImgSequence",
+        "type": "CamVidVideo",
         "kwargs": {
-            "short": true
         }
     },
     "archs": [
@@ -13,7 +12,7 @@
             "kwargs": {
                 "batch_size": 1,
                 "shuffle": true,
-                "num_workers": true
+                "num_workers": 1
             }
         },
         "val": {

@@ -33,7 +33,7 @@ class ImgSeqDataLoader(BaseDataLoader):
     """
 
     def __init__(self, dataset: imgseqdataset.ImgSeqDataset, batch_size=1, shuffle=False, num_workers=0,
-                 drop_last=False, use_workers=False):
+                 drop_last=False):
         """
         :param dataset:
         :type dataset: ImgSeqDataset
@@ -41,7 +41,7 @@ class ImgSeqDataLoader(BaseDataLoader):
         :type batch_size: int
         :param shuffle: whether the image sequences should appear in order or not.
         :type shuffle: bool
-        :param num_workers: can be overridden by use_workers
+        :param num_workers: number of worker threads
         :type num_workers: int
         :param drop_last:
         :type drop_last: bool
@@ -53,9 +53,6 @@ class ImgSeqDataLoader(BaseDataLoader):
             raise NotImplementedError("Drop last for image sequence batches not implemented yet")
 
         batch_sampler = imgseqbatchsampler.ImgSeqBatchSampler(dataset, batch_size, shuffle)
-        if use_workers:
-            num_workers = (batch_size + 1) // 2
-
         self.data_loader = dl.DataLoader(dataset, batch_sampler=batch_sampler, num_workers=num_workers,
                                          collate_fn=collate_to_batch)
 
