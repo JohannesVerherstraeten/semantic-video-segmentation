@@ -12,7 +12,7 @@ the work of my [master thesis](thesis-temporal-video-consistency.pdf). It offers
     [warping](http://openaccess.thecvf.com/content_ECCV_2018/html/Wei-Sheng_Lai_Real-Time_Blind_Video_ECCV_2018_paper.html) 
     loss.
 - Evaluation metric to evaluate the temporal consistency of consecutive segmentations: the temporal IoU.
-- A framework that allows plug-and-play of all thesis items, and that is easily extendable.
+- A framework that allows plug-and-play of all these items, and that is easily extendable.
 
 More information of the theory behind these implementations can be found in the master thesis file: 
     [thesis-temporal-video-consistency.pdf](thesis-temporal-video-consistency.pdf).
