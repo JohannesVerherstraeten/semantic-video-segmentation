@@ -54,10 +54,11 @@ Example:
 ```bash
 python evaluate.py config/visualize/cityscapes-enet-enetlstm.json -v -t 0.1 --cuda
 ```
-The `-v` option visualizes the network(s) on the videos or images in the dataset, as specified in the config file.
+The `-v` option visualizes the network(s) on the videos or images in the dataset, as specified in the config file. 
+The `-t` option sets the framerate. 
 To quit the visualization environment, press `q`. Example: 
 
-![alt text](example.png "Example image")
+![alt text](examples/example.png "Example image")
 
 ## References
 
